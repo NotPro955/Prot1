@@ -9,7 +9,7 @@ fn client_handler(mut stream: TcpStream){
         stream.read(&mut buffer).expect("Failed to read");
         let request = String::from_utf8_lossy(&buffer[..]);
         println!("Recieved: {}",request);
-        
+        thread::spawn(|| println!("This the thread"));
         let mut response = String::new();
         std::io::stdin()
             .read_line(&mut response)
@@ -24,7 +24,7 @@ fn main(){
 
     for stream in listener.incoming(){
         match stream{
-            Ok(stream)=> {
+            Ok(stream)=>{
                 thread::spawn( || client_handler(stream));
             }
             Err(_)=>{
