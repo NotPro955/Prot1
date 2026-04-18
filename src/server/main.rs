@@ -2,6 +2,10 @@ use std::net::{TcpListener, TcpStream};
 use std::thread;
 use std::io::{Read,Write};
 
+// fn channel(&mut _stream: TcpStream){
+//     todo!();
+// }
+
 fn client_handler(mut stream: TcpStream){
     println!("Client connected: {:?}",stream);
     loop{
@@ -9,7 +13,6 @@ fn client_handler(mut stream: TcpStream){
         stream.read(&mut buffer).expect("Failed to read");
         let request = String::from_utf8_lossy(&buffer[..]);
         println!("Recieved: {}",request);
-        thread::spawn(|| println!("This the thread"));
         let mut response = String::new();
         std::io::stdin()
             .read_line(&mut response)
