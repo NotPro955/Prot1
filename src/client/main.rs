@@ -1,10 +1,12 @@
 use std::net::TcpStream;
 use std::io::{Read, Write};
+use std::sync::mpsc::{Sender,Receiver};
 
 fn server_connect() {
     match TcpStream::connect("localhost:8989") {
         Ok(mut server) => {
             println!("Successfully connected to server");
+            // let (send,recv) = mpsc::channel();
             loop{
                 let mut msg = String::new();
                 print!("To Server: ");
@@ -14,10 +16,10 @@ fn server_connect() {
                 let msg = msg.as_bytes();
                 server.write(msg).unwrap();
                 println!("");
-                let mut data = [0 as u8; 6];
-                server.read(&mut data).unwrap();
-                let response = String::from_utf8_lossy(&data);
-                println!("From Server: {}",response);
+                // let mut data = [0 as u8; 6];
+                // server.read(&mut data).unwrap();
+                // let response = String::from_utf8_lossy(&data);
+                // println!("From Server: {}",response);
             }
         },
         Err(e) => println!("Failed to connect: {}", e),
